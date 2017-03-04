@@ -23,6 +23,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		F306C9B21E69713400D5EF6B /* hist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = hist.cpp; path = src/hist.cpp; sourceTree = "<group>"; };
+		F306C9B81E69771100D5EF6B /* rgbtogray.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rgbtogray.cpp; path = src/rgbtogray.cpp; sourceTree = "<group>"; };
+		F306C9BC1E69890000D5EF6B /* graytobin.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graytobin.cpp; path = src/graytobin.cpp; sourceTree = "<group>"; };
 		F39D4EFE1E5823F40054EEB0 /* Black-white(lab1) */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Black-white(lab1)"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F39D4F011E5823F40054EEB0 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -38,6 +41,38 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F306C9B01E6970DE00D5EF6B /* Hist */ = {
+			isa = PBXGroup;
+			children = (
+				F306C9B21E69713400D5EF6B /* hist.cpp */,
+			);
+			name = Hist;
+			sourceTree = "<group>";
+		};
+		F306C9B11E6970F400D5EF6B /* application */ = {
+			isa = PBXGroup;
+			children = (
+				F39D4F011E5823F40054EEB0 /* main.cpp */,
+			);
+			name = application;
+			sourceTree = "<group>";
+		};
+		F306C9B71E6976C400D5EF6B /* rgbtogray */ = {
+			isa = PBXGroup;
+			children = (
+				F306C9B81E69771100D5EF6B /* rgbtogray.cpp */,
+			);
+			name = rgbtogray;
+			sourceTree = "<group>";
+		};
+		F306C9BB1E6988DB00D5EF6B /* graytobin */ = {
+			isa = PBXGroup;
+			children = (
+				F306C9BC1E69890000D5EF6B /* graytobin.cpp */,
+			);
+			name = graytobin;
+			sourceTree = "<group>";
+		};
 		F39D4EF51E5823F40054EEB0 = {
 			isa = PBXGroup;
 			children = (
@@ -57,7 +92,10 @@
 		F39D4F001E5823F40054EEB0 /* Black-white(lab1) */ = {
 			isa = PBXGroup;
 			children = (
-				F39D4F011E5823F40054EEB0 /* main.cpp */,
+				F306C9BB1E6988DB00D5EF6B /* graytobin */,
+				F306C9B71E6976C400D5EF6B /* rgbtogray */,
+				F306C9B11E6970F400D5EF6B /* application */,
+				F306C9B01E6970DE00D5EF6B /* Hist */,
 			);
 			path = "Black-white(lab1)";
 			sourceTree = "<group>";
@@ -218,6 +256,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = UNZP8WBNM9;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -226,6 +284,26 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DEVELOPMENT_TEAM = UNZP8WBNM9;
+				HEADER_SEARCH_PATHS = /usr/local/include;
+				LIBRARY_SEARCH_PATHS = /usr/local/lib;
+				OTHER_LDFLAGS = (
+					"-lopencv_calib3d",
+					"-lopencv_core",
+					"-lopencv_features2d",
+					"-lopencv_flann",
+					"-lopencv_highgui",
+					"-lopencv_imgcodecs",
+					"-lopencv_imgproc",
+					"-lopencv_ml",
+					"-lopencv_objdetect",
+					"-lopencv_photo",
+					"-lopencv_shape",
+					"-lopencv_stitching",
+					"-lopencv_superres",
+					"-lopencv_video",
+					"-lopencv_videoio",
+					"-lopencv_videostab",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
@@ -249,6 +327,7 @@
 				F39D4F071E5823F40054EEB0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
