@@ -71,28 +71,8 @@ int main( )
     Mat_<uchar> blackAndWhiteImagePtr = CoolBlackAndWhiteImage;
     Mat_<uchar> SimpleBlackAndWhiteImagePtr = SimpleBlackAndWhiteImage;
     
-  
-    // our method to convert image to black and white
-    for (int i  = 0 ; i < blackAndWhiteImagePtr.rows; i++) {
-        for (int j = 0 ; j < blackAndWhiteImagePtr.cols; j++) {
-            if (blackAndWhiteImagePtr(i,j) > barrierObtainedByTheMethodOfTheTriangle) {
-                blackAndWhiteImagePtr(i,j)= 255;
-            }else {
-                blackAndWhiteImagePtr(i,j)= 0;
-            }
-            }
-    }
-    // simple convertation method
-    for (int i  = 0 ; i < SimpleBlackAndWhiteImagePtr.rows; i++) {
-        for (int j = 0 ; j < SimpleBlackAndWhiteImagePtr.cols; j++) {
-            if (SimpleBlackAndWhiteImagePtr(i,j) > SimpleBarrier) {
-                SimpleBlackAndWhiteImagePtr(i,j)= 255;
-            }else {
-                SimpleBlackAndWhiteImagePtr(i,j)= 0;
-            }
-        }
-    }
-    
+    ConvertImageToBinaryWithBarrier(CoolBlackAndWhiteImage,barrierObtainedByTheMethodOfTheTriangle);
+    ConvertImageToBinaryWithBarrier(SimpleBlackAndWhiteImage,SimpleBarrier);
     
     
     // show the pixels of the difference in 2 different methods
@@ -100,34 +80,34 @@ int main( )
     img.copyTo(ImageForShowDiff);
     Mat_<Vec3b> newPtr = ImageForShowDiff;
     
-//    for (int i  = 0 ; i < newPtr.rows; i++) {
-//        for (int j = 0 ; j < newPtr.cols; j++) {
-//            if (SimpleBlackAndWhiteImagePtr(i,j) == blackAndWhiteImagePtr(i,j)) {
-//                if (SimpleBlackAndWhiteImagePtr(i,j) == 255) {
-//                    //ImageForShowDiff.at<Vec3b>(i,j)=Vec3b(255,255,255);
-//                    newPtr(i,j)=Vec3b(255,255,255);
-//                }
-//                else {
-//                    //ImageForShowDiff.at<Vec3b>(i,j)=Vec3b(0,0,0);
-//                    newPtr(i,j)=Vec3b(0,0,0);
-//                }
-//            }
-//            else {
-//                //ImageForShowDiff.at<Vec3b>(i,j)=Vec3b(255,0,0);
-//                newPtr(i,j)=Vec3b(255,0,0);
-//            }
-//        }
-//    }
-    
-    
     for (int i  = 0 ; i < newPtr.rows; i++) {
         for (int j = 0 ; j < newPtr.cols; j++) {
-            if (j%2) {
-                newPtr(i,j)=Vec3b(255,255,255);
+            if (SimpleBlackAndWhiteImagePtr(i,j) == blackAndWhiteImagePtr(i,j)) {
+                if (SimpleBlackAndWhiteImagePtr(i,j) == 255) {
+                    //ImageForShowDiff.at<Vec3b>(i,j)=Vec3b(255,255,255);
+                    newPtr(i,j)=Vec3b(255,255,255);
+                }
+                else {
+                    //ImageForShowDiff.at<Vec3b>(i,j)=Vec3b(0,0,0);
+                    newPtr(i,j)=Vec3b(0,0,0);
+                }
             }
-            
+            else {
+                //ImageForShowDiff.at<Vec3b>(i,j)=Vec3b(255,0,0);
+                newPtr(i,j)=Vec3b(255,0,0);
+            }
         }
     }
+    
+    
+//    for (int i  = 0 ; i < newPtr.rows; i++) {
+//        for (int j = 0 ; j < newPtr.cols; j++) {
+//            if (j%2) {
+//                newPtr(i,j)=Vec3b(255,255,255);
+//            }
+//            
+//        }
+//    }
     imshow("CoolBaw", CoolBlackAndWhiteImage);
     imshow("SimpleBaw",SimpleBlackAndWhiteImage);
     imshow("Difference",ImageForShowDiff);
