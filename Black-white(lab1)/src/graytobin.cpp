@@ -97,6 +97,49 @@ void ConvertImageToBinaryWithBarrier(Mat_<uchar> _imagePtr,int _barrier ) {
         }
     }
 }
+//////////////////////////////////////////////////////////////////////////////////////////
+// p.s it is does not work, and i can not describe why is it ;(
+void compareTwoUshortMat(Mat_<ushort> _firstMat,
+                           Mat_<ushort> _secondMat,
+                           uint _rows,uint _cols,
+                           Mat _MatToStore) {
+    std::cout << _MatToStore.rows << " - MatToStore rows" << std::endl; // some for debug
+    std::cout << _MatToStore.cols << " - MatToStore cols" << std::endl; // some for debug
+    std::cout<< _rows << " - rows" << std::endl;                       // some for debug
+    std::cout << _cols << " - cols" << std::endl;                      // some for debug
+    
+    Mat_<Vec3b> MatToStorePtr = _MatToStore;
+    for (int i = 0; i < _rows; i++) {
+        for (int j = 0; j < _cols; j++) {
+            if ( (_firstMat(i,j) == _secondMat(i,j) ) && (_firstMat(i,j) == 255) ) {
+                MatToStorePtr(i,j) = Vec3b(255,255,255);
+            }
+            if ( (_firstMat(i,j) == _secondMat(i,j) ) && (_firstMat(i,j) == 0) ) {
+                MatToStorePtr(i,j) = Vec3b(0,0,0);
+            }
+            if (_firstMat(i,j) != _secondMat(i,j) ){
+                MatToStorePtr(i,j) = Vec3b(255,0,0);
+            }
+                
+        }
+    }
+}
+
+//////////////////////////////////////////////////////////////////////////////////////////
+void compareTwoMat(const Mat firstMat, const Mat secondMat) {
+    Mat differenceImage = firstMat.clone();
+    for (int i = 0; i < differenceImage.rows; i++) {
+        for (int j = 0; j < differenceImage.cols; j++) {
+            if (firstMat.at<cv::Vec3b>(i, j) != secondMat.at<cv::Vec3b>(i, j)) {
+                differenceImage.at<cv::Vec3b>(i, j) = Vec3b(255, 0, 0);
+            } else {
+                differenceImage.at<cv::Vec3b>(i, j) = firstMat.at<cv::Vec3b>(i, j);
+            }
+        }
+    }
+    
+    imshow("Image difference", differenceImage);
+}
 
 
 

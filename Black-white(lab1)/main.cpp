@@ -27,7 +27,6 @@ int main( )
         return -1;
     }
     
-    
     // rgb to gray scale
     Mat grayImg = intensity(img);
     // get histogram for gray scale
@@ -76,41 +75,10 @@ int main( )
     
     
     // show the pixels of the difference in 2 different methods
-    Mat ImageForShowDiff;
-    img.copyTo(ImageForShowDiff);
-    Mat_<Vec3b> newPtr = ImageForShowDiff;
+    compareTwoMat(CoolBlackAndWhiteImage,SimpleBlackAndWhiteImage);
     
-    for (int i  = 0 ; i < newPtr.rows; i++) {
-        for (int j = 0 ; j < newPtr.cols; j++) {
-            if (SimpleBlackAndWhiteImagePtr(i,j) == blackAndWhiteImagePtr(i,j)) {
-                if (SimpleBlackAndWhiteImagePtr(i,j) == 255) {
-                    //ImageForShowDiff.at<Vec3b>(i,j)=Vec3b(255,255,255);
-                    newPtr(i,j)=Vec3b(255,255,255);
-                }
-                else {
-                    //ImageForShowDiff.at<Vec3b>(i,j)=Vec3b(0,0,0);
-                    newPtr(i,j)=Vec3b(0,0,0);
-                }
-            }
-            else {
-                //ImageForShowDiff.at<Vec3b>(i,j)=Vec3b(255,0,0);
-                newPtr(i,j)=Vec3b(255,0,0);
-            }
-        }
-    }
-    
-    
-//    for (int i  = 0 ; i < newPtr.rows; i++) {
-//        for (int j = 0 ; j < newPtr.cols; j++) {
-//            if (j%2) {
-//                newPtr(i,j)=Vec3b(255,255,255);
-//            }
-//            
-//        }
-//    }
     imshow("CoolBaw", CoolBlackAndWhiteImage);
     imshow("SimpleBaw",SimpleBlackAndWhiteImage);
-    imshow("Difference",ImageForShowDiff);
     waitKey(0);
     return 0;
 }
