@@ -155,7 +155,7 @@ ushort findBarrierByTriangeMethod(const int _leftPoint,const int _rightPoint, co
     double leftPoint = _leftPoint, rightPoint = _rightPoint;
     //under this line you can see some from hell
     //if you want to understand this you must read formula of line by two points
-    //and formula of distance from the point to the line and combine them 
+    //and formula of distance from the point to the line and combine them
     for (int i = _leftPoint ; i <= _rightPoint; i++) {
         valueInThePointFromTheSection = *(_matArr + i);
         tempDistance =

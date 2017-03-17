@@ -42,8 +42,8 @@ int main( )
     uint max = findMaxValueInHistArrayAndFixIndex(histArr, &leftFlag);
     uint min = findMinValueInHistArrayAndFixIndex(histArr, &rightFlag);
     //show max and min values for debug
-    cout <<"max value = " << max << " in point - " << rightFlag << endl;
-    cout <<"min value = " << min << " in point - " << leftFlag << endl;
+    cout <<"max value = " << max << " in point - " << leftFlag << endl;
+    cout <<"min value = " << min << " in point - " << rightFlag << endl;
     
     // declarate
     ushort barrierObtainedByTheMethodOfTheTriangle = -1;
