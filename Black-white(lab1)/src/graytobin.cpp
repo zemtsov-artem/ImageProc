@@ -54,7 +54,7 @@ uint findMaxValueInHistArrayAndFixIndex(uint* _histArr,uint *_ptrToTheFlagVariab
     return tempMax;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
-//save to cry sometimes
+//leave this for the sufferings when you  will think that your english is good
 // find max distance from line that connecting 2 points to some point from the set
 //ushort findMaxDistanceFromLineToSomePoint(int _firstPoint,int _secondPoint,uint *_histArr) {
 //    double maxDistance = 0;
@@ -146,12 +146,16 @@ void compareTwoMat(const Mat firstMat, const Mat secondMat) {
 
 ushort findBarrierByTriangeMethod(const int _leftPoint,const int _rightPoint, const uint * _matArr ) {
     uint desiredBarrier = _leftPoint;
+    //add some aliases for more easily "for"
     double valueInTheLeftPoint = *(_matArr + _leftPoint);
     double valueInTheRightPoint = *(_matArr + _rightPoint);
     double valueInThePointFromTheSection = _leftPoint;
     double maxDistance = 0, tempDistance = 0;
+    //add new double variables for a accurate calc
     double leftPoint = _leftPoint, rightPoint = _rightPoint;
-    
+    //under this line you can see some from hell
+    //if you want to understand this you must read formula of line by two points
+    //and formula of distance from the point to the line and combine them 
     for (int i = _leftPoint ; i <= _rightPoint; i++) {
         valueInThePointFromTheSection = *(_matArr + i);
         tempDistance =

@@ -98,11 +98,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Black-white(lab1)/src/graytobin.cpp"
-            timestampString = "511414220.83728"
+            timestampString = "511416195.652366"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "171"
-            endingLineNumber = "171"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
             landmarkName = "findBarrierByTriangeMethod(const int _leftPoint,const int _rightPoint, const uint * _matArr )"
             landmarkType = "9">
          </BreakpointContent>

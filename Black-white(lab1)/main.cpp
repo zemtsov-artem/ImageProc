@@ -50,7 +50,7 @@ int main( )
     ushort SimpleBarrier = (rightFlag+leftFlag)/2;
     
     //find barrier and check him
-    barrierObtainedByTheMethodOfTheTriangle = ushort (findBarrierByTriangeMethod(leftFlag,rightFlag,histArr));
+    barrierObtainedByTheMethodOfTheTriangle = findBarrierByTriangeMethod(leftFlag,rightFlag,histArr);
     if ( checkCorrect(barrierObtainedByTheMethodOfTheTriangle,0,255)) {
         cout<<barrierObtainedByTheMethodOfTheTriangle<<" - unknownBarrier"<<endl;
     }
