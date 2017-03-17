@@ -12,16 +12,16 @@
 
 using namespace cv;
 
-void getNewHist(uint *_arrayPtr,uint _sizeOfArray,uint _maxValueInArray) {
+Mat getNewHistWihtParam(uint *_arrayPtr,uint _sizeOfArray,uint _maxValueInArray,int _param) {
     //create zero mat
-    Mat myHist = Mat::zeros(_maxValueInArray,_sizeOfArray,CV_8U);
+    uint maxValueInArray = _maxValueInArray / _param;
+    Mat myHist = Mat::zeros(maxValueInArray,_sizeOfArray,CV_8U);
     //fill mat
     for (int i = 0; i < 255; i++) {
-        for (int j = 0; j < *(_arrayPtr + i); j += 2) {
-            myHist.at<uchar>(_maxValueInArray - j / 2 , i) = 255;
+        for (int j = 0; j < *(_arrayPtr + i); j += _param) {
+            myHist.at<uchar>(maxValueInArray - j / _param , i) = 255;
         }
     }
-    //show histogram
-    imshow("Myhist",myHist);
+    return myHist;
     
 }

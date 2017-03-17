@@ -26,21 +26,25 @@ int main( )
         cout <<  "Could not open or find the image" << std::endl ;
         return -1;
     }
-    
+    Mat erlangNoise = imread("example.jpg");
     // rgb to gray scale
     Mat grayImg = intensity(img);
     Mat_<uchar> GrayPtr = grayImg;
     // declarate arr
     uint *histArr = new uint[256];
-    
+    uint *histArrOfErlangPic = new uint[256];
     // init arr and filling from gray image
     initHistArr(histArr);
+    initHistArr(histArrOfErlangPic);
     fillArrayWithValuesFromGI(histArr, grayImg);
+    fillArrayWithValuesFromGI(histArrOfErlangPic, erlangNoise);
+    imshow("erlang noise", erlangNoise);
     
     // the declaration of the flags of the describing min an max
-    uint leftFlag = 256, rightFlag = 0;
+    uint leftFlag = 256, rightFlag = 0,tempErlangFlag = 0;
     uint max = findMaxValueInHistArrayAndFixIndex(histArr, &leftFlag);
     uint min = findMinValueInHistArrayAndFixIndex(histArr, &rightFlag);
+    uint erlangPicMax = findMaxValueInHistArrayAndFixIndex(histArrOfErlangPic, &tempErlangFlag);
     //show max and min values for debug
     cout <<"max value = " << max << " in point - " << leftFlag << endl;
     cout <<"min value = " << min << " in point - " << rightFlag << endl;
@@ -72,11 +76,14 @@ int main( )
     // show the pixels of the difference in 2 different methods
     compareTwoMat(CoolBlackAndWhiteImage,SimpleBlackAndWhiteImage);
     //show histogram
-    getNewHist(histArr, 256, max/2);
+    Mat histOfGrayImg = getNewHistWihtParam(histArr, 256, max,2);
+    Mat histOfErlangPic = getNewHistWihtParam(histArrOfErlangPic, 256, erlangPicMax,4);
     
     //show binary pictures obtained by two methods
     imshow("BawByTriangleMethod", CoolBlackAndWhiteImage);
     imshow("SimpleBaw",SimpleBlackAndWhiteImage);
+    imshow("GrayImg hist",histOfGrayImg);
+    imshow("Erlang hist with param",histOfErlangPic);
     
     waitKey(0);
     return 0;
