@@ -29,13 +29,9 @@ int main( )
     
     // rgb to gray scale
     Mat grayImg = intensity(img);
-    // get histogram for gray scale
-    Mat hist = getHist(grayImg);
-    // declarate and init ptr and temrary min
-    cv::Mat_<uchar> ptr = hist;
-    cv::Mat_<uchar> GrayPtr = grayImg;
+    Mat_<uchar> GrayPtr = grayImg;
     // declarate arr
-    uint *histArr = new uint[255];
+    uint *histArr = new uint[256];
     
     // init arr and filling from gray image
     initHistArr(histArr);
@@ -43,42 +39,45 @@ int main( )
     
     // the declaration of the flags of the describing min an max
     uint leftFlag = 256, rightFlag = 0;
-    findMaxValueInHistArrayAndFixIndex(histArr, &leftFlag);
-    findMinValueInHistArrayAndFixIndex(histArr, &rightFlag);
+    uint max = findMaxValueInHistArrayAndFixIndex(histArr, &leftFlag);
+    uint min = findMinValueInHistArrayAndFixIndex(histArr, &rightFlag);
+    //show max and min values for debug
+    cout <<"max value = " << max << " in point - " << rightFlag << endl;
+    cout <<"min value = " << min << " in point - " << leftFlag << endl;
     
     // declarate
     ushort barrierObtainedByTheMethodOfTheTriangle = -1;
     ushort SimpleBarrier = (rightFlag+leftFlag)/2;
     
-    barrierObtainedByTheMethodOfTheTriangle = findMaxDistanceFromLineToSomePoint(
-                                                                                 leftFlag,
-                                                                                 rightFlag,
-                                                                                 histArr);
-    
-    
+    //find barrier and check him
+    barrierObtainedByTheMethodOfTheTriangle = ushort (findBarrierByTriangeMethod(leftFlag,rightFlag,histArr));
     if ( checkCorrect(barrierObtainedByTheMethodOfTheTriangle,0,255)) {
         cout<<barrierObtainedByTheMethodOfTheTriangle<<" - unknownBarrier"<<endl;
     }
     else {
         cout<<"Wrong barrier"<<endl;
     }
-    // declarate new mat to save new binary images
-    Mat CoolBlackAndWhiteImage,SimpleBlackAndWhiteImage;
     
+    //declarate two new matrix like a grayimg mat
+    Mat CoolBlackAndWhiteImage,SimpleBlackAndWhiteImage;
     grayImg.copyTo(CoolBlackAndWhiteImage);
     grayImg.copyTo(SimpleBlackAndWhiteImage);
     Mat_<uchar> blackAndWhiteImagePtr = CoolBlackAndWhiteImage;
     Mat_<uchar> SimpleBlackAndWhiteImagePtr = SimpleBlackAndWhiteImage;
     
+    //convert to black and white image by two dif methods
     ConvertImageToBinaryWithBarrier(CoolBlackAndWhiteImage,barrierObtainedByTheMethodOfTheTriangle);
     ConvertImageToBinaryWithBarrier(SimpleBlackAndWhiteImage,SimpleBarrier);
     
-    
     // show the pixels of the difference in 2 different methods
     compareTwoMat(CoolBlackAndWhiteImage,SimpleBlackAndWhiteImage);
+    //show histogram
+    getNewHist(histArr, 256, max/2);
     
-    imshow("CoolBaw", CoolBlackAndWhiteImage);
+    //show binary pictures obtained by two methods
+    imshow("BawByTriangleMethod", CoolBlackAndWhiteImage);
     imshow("SimpleBaw",SimpleBlackAndWhiteImage);
+    
     waitKey(0);
     return 0;
 }

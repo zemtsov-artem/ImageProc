@@ -33,7 +33,7 @@ void printHistArray(uint *_histArr){
 uint findMinValueInHistArrayAndFixIndex(uint *_histArr,uint *_ptrToTheFlagVariable) {
     uint tempMin = *(_histArr);
     for (int i =0; i<256; i++) {
-        if (*(_histArr+i) < tempMin ) {
+        if (*(_histArr+i) <= tempMin ) {
             tempMin = *(_histArr+i);
             *(_ptrToTheFlagVariable) = i;
         }
@@ -54,30 +54,58 @@ uint findMaxValueInHistArrayAndFixIndex(uint* _histArr,uint *_ptrToTheFlagVariab
     return tempMax;
 }
 //////////////////////////////////////////////////////////////////////////////////////////
+//save to cry sometimes
 // find max distance from line that connecting 2 points to some point from the set
-ushort findMaxDistanceFromLineToSomePoint(int _firstPoint,int _secondPoint,uint *_histArr) {
-    int maxDistance = 0;
-    int barrierObtainedByTheMethodOfTheTriangle = -1;
-
-    for (int i = _firstPoint; i<(_secondPoint-_firstPoint); i++) {
-        double tempValue =
-        abs(
-            (_firstPoint+i) / (_secondPoint - _firstPoint)+
-            *(_histArr+_firstPoint+i) / (*(_histArr+_secondPoint) - *(_histArr+_firstPoint) ) -
-            _firstPoint / (_secondPoint-_firstPoint) +
-            *(_histArr+_firstPoint) / (*(_histArr+_secondPoint) - *(_histArr + _firstPoint) )
-            )  /
-        sqrt(
-             (1 / pow(_secondPoint - _firstPoint, 2) ) +
-             (1 / pow((*(_histArr + _secondPoint) - *(_histArr + _firstPoint)),2) )
-             );
-        if ( ((int)tempValue) > maxDistance ){
-            maxDistance = (int)tempValue;
-            barrierObtainedByTheMethodOfTheTriangle = _firstPoint + i ;
-        }
-    }
-    return barrierObtainedByTheMethodOfTheTriangle;
-}
+//ushort findMaxDistanceFromLineToSomePoint(int _firstPoint,int _secondPoint,uint *_histArr) {
+//    double maxDistance = 0;
+//    int barrierObtainedByTheMethodOfTheTriangle = -1;
+//    double tempValue = -1  ;
+//    double numerator = -1 ,denominator = -1 ;
+//    double fis,ses,ths,fos;
+//    double sum;
+//    for (int i = 0; i < _secondPoint - _firstPoint; i++) {
+//        //числитель - numerator
+//        //знаменатель - denomirator
+//        
+//        
+//        fis = (double(_firstPoint + i) / double(_secondPoint - _firstPoint));
+//        ses = -(double (*(_histArr+_firstPoint+i)) / double(*(_histArr+_secondPoint) - *(_histArr+_firstPoint) ));
+//        ths = -(double(_firstPoint) / double(_secondPoint-_firstPoint));
+//        fos = (double(*(_histArr+_firstPoint)) / double(*(_histArr+_secondPoint) - *(_histArr + _firstPoint) ));
+//
+//        sum =abs(fis+ses+ths+fos);
+//        denominator = sqrt(
+//                           (1 / double(pow(_secondPoint - _firstPoint, 2) )) +
+//                           (1 / double(pow((*(_histArr + _secondPoint)) - *(_histArr + _firstPoint),2) ))
+//                           );
+////        std::cout << denominator <<" - den" << std::endl;
+////        std::cout << sum <<" - sum" << std::endl;
+////        std::cout<< denominator / sum << std::endl << std::endl;
+//        tempValue =
+//        abs(
+//            (double(_firstPoint + i) / double(_secondPoint - _firstPoint)) -
+//            (double (*(_histArr + _firstPoint + i)) / double(*(_histArr+_secondPoint) - *(_histArr+_firstPoint) )) -
+//            (double(_firstPoint) / double(_secondPoint-_firstPoint)) +
+//            (double(*(_histArr+_firstPoint)) / double(*(_histArr+_secondPoint) - *(_histArr + _firstPoint) ))
+//            )  /
+//        sqrt(
+//             (1 / double(pow(_secondPoint - _firstPoint, 2) )) +
+//             (1 / double(pow((*(_histArr + _secondPoint)) - *(_histArr + _firstPoint),2) ))
+//             );
+////       std::cout << tempValue << " - tempvalue"<<std::endl;
+//        
+//        if (  tempValue > maxDistance ){
+//            maxDistance = tempValue;
+//            barrierObtainedByTheMethodOfTheTriangle = _firstPoint + i ;
+////            std::cout << maxDistance<<std::endl;
+//        }
+//        
+//        if (tempValue == -1) {
+////            std::cout<<"ERROR IN THE MATH" <<std::endl;
+//        }
+//    }
+//    return barrierObtainedByTheMethodOfTheTriangle;
+//}
 //////////////////////////////////////////////////////////////////////////////////////////
 int checkCorrect(int _value,int min,int max){
     if ( (_value <= max) && (_value >= min) ) {
@@ -97,40 +125,13 @@ void ConvertImageToBinaryWithBarrier(Mat_<uchar> _imagePtr,int _barrier ) {
         }
     }
 }
-//////////////////////////////////////////////////////////////////////////////////////////
-// p.s it is does not work, and i can not describe why is it ;(
-void compareTwoUshortMat(Mat_<ushort> _firstMat,
-                           Mat_<ushort> _secondMat,
-                           uint _rows,uint _cols,
-                           Mat _MatToStore) {
-    std::cout << _MatToStore.rows << " - MatToStore rows" << std::endl; // some for debug
-    std::cout << _MatToStore.cols << " - MatToStore cols" << std::endl; // some for debug
-    std::cout<< _rows << " - rows" << std::endl;                       // some for debug
-    std::cout << _cols << " - cols" << std::endl;                      // some for debug
-    
-    Mat_<Vec3b> MatToStorePtr = _MatToStore;
-    for (int i = 0; i < _rows; i++) {
-        for (int j = 0; j < _cols; j++) {
-            if ( (_firstMat(i,j) == _secondMat(i,j) ) && (_firstMat(i,j) == 255) ) {
-                MatToStorePtr(i,j) = Vec3b(255,255,255);
-            }
-            if ( (_firstMat(i,j) == _secondMat(i,j) ) && (_firstMat(i,j) == 0) ) {
-                MatToStorePtr(i,j) = Vec3b(0,0,0);
-            }
-            if (_firstMat(i,j) != _secondMat(i,j) ){
-                MatToStorePtr(i,j) = Vec3b(255,0,0);
-            }
-                
-        }
-    }
-}
 
 //////////////////////////////////////////////////////////////////////////////////////////
 void compareTwoMat(const Mat firstMat, const Mat secondMat) {
     Mat differenceImage = firstMat.clone();
     for (int i = 0; i < differenceImage.rows; i++) {
         for (int j = 0; j < differenceImage.cols; j++) {
-            if (firstMat.at<cv::Vec3b>(i, j) != secondMat.at<cv::Vec3b>(i, j)) {
+            if (firstMat.at<Vec3b>(i, j) != secondMat.at<cv::Vec3b>(i, j)) {
                 differenceImage.at<cv::Vec3b>(i, j) = Vec3b(255, 0, 0);
             } else {
                 differenceImage.at<cv::Vec3b>(i, j) = firstMat.at<cv::Vec3b>(i, j);
@@ -141,6 +142,36 @@ void compareTwoMat(const Mat firstMat, const Mat secondMat) {
     imshow("Image difference", differenceImage);
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////
 
-
-
+ushort findBarrierByTriangeMethod(const int _leftPoint,const int _rightPoint, const uint * _matArr ) {
+    uint desiredBarrier = _leftPoint;
+    double valueInTheLeftPoint = *(_matArr + _leftPoint);
+    double valueInTheRightPoint = *(_matArr + _rightPoint);
+    double valueInThePointFromTheSection = _leftPoint;
+    double maxDistance = 0, tempDistance = 0;
+    double leftPoint = _leftPoint, rightPoint = _rightPoint;
+    
+    for (int i = _leftPoint ; i <= _rightPoint; i++) {
+        valueInThePointFromTheSection = *(_matArr + i);
+        tempDistance =
+            abs(
+                (1 / (rightPoint - leftPoint) ) * i +
+                (-1 / (valueInTheRightPoint - valueInTheLeftPoint) * valueInThePointFromTheSection) +
+                valueInTheLeftPoint / (valueInTheRightPoint - valueInTheLeftPoint) -
+                leftPoint / ( rightPoint - leftPoint)
+            ) /
+            sqrt(
+                1 / (pow(rightPoint - leftPoint, 2)) +
+                1 / (pow(valueInTheRightPoint - valueInTheLeftPoint, 2) )
+            );
+        
+        if (tempDistance > maxDistance) {
+            maxDistance = tempDistance;
+            desiredBarrier = i;
+        }
+    }
+    // if you need to some debug and show intermediate values then move cout in if scope
+    std::cout <<"new barrier is - " << desiredBarrier << " distance to him = " << tempDistance << std::endl;
+    return desiredBarrier;
+}

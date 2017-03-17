@@ -12,27 +12,16 @@
 
 using namespace cv;
 
-Mat getHist(Mat& img) {
-    Mat hist;
-    
-    int bins = 256;
-    int histSize[] = {bins};
-    int channels[] = {0};
-    float lranges[] = {0, 256};
-    const float* ranges[] = {lranges};
-    
-    calcHist(&img, 1, channels, Mat(), hist, 1, histSize, ranges);
-    
-    double max_val = 0;
-    minMaxLoc(hist, 0, &max_val);
-    
-    int hist_h = 256;
-    Mat imgHist(hist_h, bins, CV_8U);
-    
-    for(int i = 0; i < bins; i++) {
-        line(imgHist, Point(i, hist_h - cvRound(hist.at<float>(i) * hist_h / max_val)),
-             Point(i, hist_h), Scalar::all(255));
+void getNewHist(uint *_arrayPtr,uint _sizeOfArray,uint _maxValueInArray) {
+    //create zero mat
+    Mat myHist = Mat::zeros(_maxValueInArray,_sizeOfArray,CV_8U);
+    //fill mat
+    for (int i = 0; i < 255; i++) {
+        for (int j = 0; j < *(_arrayPtr + i); j += 2) {
+            myHist.at<uchar>(_maxValueInArray - j / 2 , i) = 255;
+        }
     }
+    //show histogram
+    imshow("Myhist",myHist);
     
-    return imgHist;
 }
